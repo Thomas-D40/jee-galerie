@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<html>
+    <head>
+        <title>Ajout d'une oeuvre</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1>Ajoutez votre oeuvre</h1>
+        <form method="POST" action="/backoffice/add-work">
+            <label for="title">Quel est le nom de l'oeuvre?</label>
+            <input type="text" name="title"><br />
+            <label for="year">Quelle est l'année de parution de l'oeuvre?</label>
+            <input type="number" name="year"><br />
+            <label for="style">Quel est le style de l'oeuvre?</label>
+            <input type="text" name="style"><br />
+            <label for="description">Décrivez l'oeuvre :</label>
+            <input type="text" name="description"><br />
+            <label for="author">Quel est le nom de l'oeuvre?</label>
+            <input type="text" name="author"><br />
+            <input type="submit">
+        </form>
+    </body>
+</html>
