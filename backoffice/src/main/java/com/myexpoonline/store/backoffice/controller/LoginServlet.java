@@ -11,13 +11,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Tom
+ * @author Administrateur
  */
-@WebServlet(name = "HomeServlet", urlPatterns = {"/home"})
-public class HomeServlet extends HttpServlet {
+@WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
+public class LoginServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,11 +37,10 @@ public class HomeServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet HomeServlet</title>");
+            out.println("<title>Servlet LoginServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Galerie d'Art - Gestion de la galerie!</h1>");
-
+            out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,20 +58,7 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet HomeServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Galerie d'Art - Gestion de la galerie!</h1>");
-            out.println("<a href='catalogue'> Voir le catalogue</a>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -85,7 +72,22 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        
+        HttpSession session = request.getSession();
+        session.setAttribute("username", username);
+        
+        response.setContentType("text/html;charset=UTF-8");
+            PrintWriter out = response.getWriter();
+        if (username.equals("admin") && password.equals("1234admin")) {
+            out.println("<p> Connexion réussie</p>");
+            out.println("<a href='catalogue'>Accéder au catalogue</a>");
+        } else {
+            
+            out.println("<p>Identifiant ou mot de passe erroné</p>");
+            out.println("<a href='login.html'>Retour à la page de connexion</a>");
+        }
     }
 
     /**

@@ -39,7 +39,7 @@ public class AddWorkServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddWorkServlet</title>");            
+            out.println("<title>Servlet AddWorkServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet AddWorkServlet at " + request.getContextPath() + "</h1>");
@@ -74,47 +74,50 @@ public class AddWorkServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-                   
-        int id = Catalogue.listOfWorks.size() + 1;
+
+        int id = Work.getLastId() + 1;
         String title = request.getParameter("title");
         int year = Integer.parseInt(request.getParameter("year"));
         String description = request.getParameter("description");
         String style = request.getParameter("style");
         Author author = new Author(request.getParameter("author"));
-        
+        boolean isPresent = false;
+
         Work work = new Work();
-        
+
         work.setId(id);
         work.setTitle(title);
         work.setYear(year);
         work.setDescription(description);
         work.setStyle(style);
         work.setAuthor(author);
-        
-        for (Work work:Catalogue.listOfWorks) {
-            if(title.equalsIgnoreCase(work.getTitle()) &&
-                    style.equalsIgnoreCase(work.getStyle()) &&
-                            author.getName().equalsIgnoreCase(work.getAuthor().getName()))
-                    )
-        }
-        
-        
-        
-        Catalogue.listOfWorks.add(work);
-        
+
+        isPresent = Catalogue.listOfWorks.stream().anyMatch(aWork -> aWork.getTitle().equalsIgnoreCase(title) && aWork.getAuthor().getName().equals(author.getName()));
+
+//        for (Work aWork : Catalogue.listOfWorks) {
+//            if (title.equalsIgnoreCase(aWork.getTitle())
+//                    &&          
+//                    author.getName().equalsIgnoreCase(aWork.getAuthor().getName())
+//                    && year == aWork.getYear()) {
+//                
+//                isPresent = true;
+//            }
+//        }
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter(); 
-            /* TODO output your page here. You may use following sample code. */
-            
-        out.println("<p>Ajout effectué</p>");         
-        
-        
-        
-        
-        
-        
-        
+        PrintWriter out = response.getWriter();
+
+        if (!isPresent) {
+            Catalogue.listOfWorks.add(work);
+            Work.setLastId(id);
+
+            out.println("<p>Ajout effectué</p>");
+
+        } else {
+
+            out.println("<p>Oeuvre déjà présente dans la galerie.</p>");
+        }
+        out.println("<a href='catalogue'> Voir le catalogue</a>");
+
     }
 
     /**

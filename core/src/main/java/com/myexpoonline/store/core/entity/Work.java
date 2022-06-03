@@ -17,12 +17,24 @@ public class Work {
     private String description;
     private Author author;
     private String style;
+    private static int lastId = 0;
+
+    public static int getLastId() {
+        return lastId;
+    }
+
+    public static void setLastId(int lastId) {
+        Work.lastId = lastId;
+    }
+
 
     public Work() {
+       
     }
 
     public Work(String title) {
-        this.title = title;
+        this.title = title; 
+        
     }
 
     public int getId() {

@@ -14,17 +14,15 @@ import com.myexpoonline.store.core.entity.Catalogue;
  */
 public class Start {
     
-        public static void main(String... args) {
-        
+    public static void main(String... args) {
+
         // Il faut alimenter notre HashSet avec des oeuvres
-    
         // Création des auteurs
         Author pabloPicasso = new Author("Pablo Picasso");
         Author vanGogh = new Author("Van Gogh");
         Author claudeMonet = new Author("Claude Monet");
 
         //Création des oeuvres
-
         Work guernica = new Work("Guernica");
         Work tournesols = new Work("Les tournesols");
         Work promenade = new Work("La promenade");
@@ -46,14 +44,19 @@ public class Start {
         tournesols.setAuthor(vanGogh);
         promenade.setAuthor(claudeMonet);
         
-        // Ajouter les oeuvres au catalogue
+        guernica.setId(1);
+        tournesols.setId(2);
+        promenade.setId(3);
         
+        Work.setLastId(3);
+
+        // Ajouter les oeuvres au catalogue
         Catalogue.listOfWorks.add(guernica);
         Catalogue.listOfWorks.add(tournesols);
         Catalogue.listOfWorks.add(promenade);
         
-        for(Work work : Catalogue.listOfWorks) {
-            System.out.println(work.getTitle() + " (" + work.getYear()  + " )");
+        for (Work work : Catalogue.listOfWorks) {
+            System.out.println(work.getTitle() + " (" + work.getYear() + " )");
         }
         
     }

@@ -8,6 +8,7 @@ import com.myexpoonline.store.core.entity.Catalogue;
 import com.myexpoonline.store.core.entity.Work;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.management.Query;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -89,6 +90,9 @@ public class WorkInfoServlet extends HttpServlet {
         out.println(myWork.getYear() + "<br />");
         out.println(myWork.getAuthor().getName() + "<br />");
         out.println(myWork.getDescription() + "<br />");
+        out.println("<form method='POST' action='addToCart'>");
+        out.println("<input type='hidden' name='id' value='"+ myWork.getId() +"'>");
+        out.println("<input type='submit'></form>");
         out.println("<a href='/frontoffice/catalogue'>Retour à notre catalogue</a>");
 
         out.println("</body>");

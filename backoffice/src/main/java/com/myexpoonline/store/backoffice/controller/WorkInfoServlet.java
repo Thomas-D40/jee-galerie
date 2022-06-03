@@ -4,6 +4,8 @@
  */
 package com.myexpoonline.store.backoffice.controller;
 
+import com.myexpoonline.store.core.entity.Catalogue;
+import com.myexpoonline.store.core.entity.Work;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -16,8 +18,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Tom
  */
-@WebServlet(name = "HomeServlet", urlPatterns = {"/home"})
-public class HomeServlet extends HttpServlet {
+@WebServlet(name = "WorkInfoServlet", urlPatterns = {"/work-infos"})
+public class WorkInfoServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,11 +38,10 @@ public class HomeServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet HomeServlet</title>");
+            out.println("<title>Servlet WorkInfoServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Galerie d'Art - Gestion de la galerie!</h1>");
-
+            out.println("<h1>Servlet WorkInfoServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,20 +59,40 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet HomeServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Galerie d'Art - Gestion de la galerie!</h1>");
-            out.println("<a href='catalogue'> Voir le catalogue</a>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+
+        PrintWriter out = response.getWriter();
+
+//        for (Work work : Catalogue.listOfWorks) {
+//
+//            if (work.getId() == Integer.parseInt(request.getParameter("id"))) {
+//                out.println("<h1>" + work.getTitle() + "</h1><br />");
+//
+//                out.println(work.getStyle() + "<br />");
+//                out.println(work.getYear() + "<br />");
+//                out.println(work.getAuthor().getName() + "<br />");
+//                out.println(work.getDescription() + "<br />");
+//                break;
+//            }
+//
+//        }
+        Work myWork = Catalogue.listOfWorks.stream()
+                .filter(work -> work.getId() == Integer.parseInt(request.getParameter("id")))
+                .findFirst().get();
+        out.println("<!DOCTYPE html>");
+        out.println("<html>");
+        out.println("<head>");
+        out.println("<title>" + myWork.getTitle() + "</title>");
+        out.println("</head>");
+        out.println("<h1>" + myWork.getTitle() + "</h1><br />");
+
+        out.println(myWork.getStyle() + "<br />");
+        out.println(myWork.getYear() + "<br />");
+        out.println(myWork.getAuthor().getName() + "<br />");
+        out.println(myWork.getDescription() + "<br />");
+        out.println("<a href='catalogue'>Retour à notre catalogue</a>");
+
+        out.println("</body>");
+        out.println("</html>");
     }
 
     /**
